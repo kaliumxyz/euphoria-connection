@@ -1,0 +1,17 @@
+{
+  "name": "euphoria-connection",
+  "version": "0.1.0",
+  "description": "A simple connection lib for euphoria.",
+  "main": "index.js",
+  "repository": "https://github.com/kaliumxyz/euphoria-connection",
+  "author": "kalium",
+  "license": "MIT",
+  "dependencies": {
+    "ava": "^0.19.1",
+    "k-log": "^0.5.0",
+    "ws": "^3.0.0"
+  },
+  "scripts": {
+    "test": "ava"
+  }
+}
