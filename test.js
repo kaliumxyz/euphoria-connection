@@ -6,7 +6,7 @@ test('can create connection',t => {
 })
 test('can connect', async t => {
 	const testPromise = new Promise((resolve, reject) => {
-		const testConnection = new connection('test', 0, resolve)
+		const testConnection = new connection('test', 0, false, resolve)
 	})
 
 	t.is(await testPromise)
@@ -14,7 +14,7 @@ test('can connect', async t => {
 
 test('download', async t => {
 	const testPromise = new Promise((resolve, reject) => {
-		const testConnection = new connection('test', 0, callback)
+		const testConnection = new connection('test', 0, false, callback)
 		function callback () {
 			testConnection.download(100, false, _ => resolve())
 		}
@@ -25,7 +25,7 @@ test('download', async t => {
 
 test('downloadAll', async t => {
 	const testPromise = new Promise((resolve, reject) => {
-		const testConnection = new connection('test', 0, callback)
+		const testConnection = new connection('test', 0, false, callback)
 		function callback () {
 			testConnection.downloadAll( _ => _ , resolve)
 		}

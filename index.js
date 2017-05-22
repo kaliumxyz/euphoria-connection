@@ -5,7 +5,7 @@ let logger = require('k-log')
 logger = new logger('euphoria.log', true, false)
 
 class connection extends EventEmitter {
-	constructor(room = 'test', human = 0, ...callback) {
+	constructor(room = 'test', human = 0, logging = false, ...callback) {
 		super()
 		const ws = new WebSocket(`wss://euphoria.io/room/${room}/ws?h=${human}`, {
 			origin: 'https://euphoria.io'
