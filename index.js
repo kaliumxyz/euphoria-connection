@@ -16,6 +16,7 @@ class connection extends EventEmitter {
 		this.ws.on('open', data => {
 			this.log('opened: ', data)
 			this.call(...callback)
+			this.emit('ready')
 		})
 
 	}
