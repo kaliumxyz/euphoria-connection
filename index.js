@@ -28,39 +28,35 @@ class connection extends ws {
 	}
 
 	download(number = 100, before = null, ...callback) {
+		if(before) {
+			before = `, "before": "${before}"` 
+		} else {
+			before = ''
+		}
 		this.send(`{
 			"type": "log",
-			"data": {"n": ${number}, "before": "${before}" }
+			"data": {"n": ${number} ${before}}
 			}`)
 		this.once('log-reply', data => {
 			callback.forEach(f => f(data))
 		})
 	}
 
-/*
-	downloadAll(downloadCallback, ...callback) {
-		this.download(1000)
-		this.once('log-reply', data => {
-			if (callback) {
-				this.ws.on('message', data => {
-					let dt = JSON.parse(data)
-					if (dt.type === "log-reply")
-						// Only do the callback if you actually have stuff to return.
-						if (dt.data.log[0]) {
-							let parent = dt.data.log[0].id
-							dt.data.log.forEach(item => downloadCallback(JSON.stringify(item) + '\n'))
-							setTimeout(_ => this.download(1000, parent), 1000)
-						} else {
 
-							downloadCallback('end\n')
-							this.resetListeners()
-							callback.forEach(f => f(data))
-						}
-				})
+	downloadAll(downloadCallback, ...callback) {
+		this.download(100, null, downloadCallback)
+		this.on('log-reply', recurse)
+		function recurse(data){
+			if(data.data.log[0]){
+				console.log("recurse")
+				this.download(1000, data.data.log[0].id, downloadCallback)
+			} else {
+				console.log('done')
+				_ => this.removeListener('log-reply', recurse)
+				callback.forEach(f => f(data))
 			}
-		})
+		}
 	}
-*/
 
 	nick(nick = '<><', ...callback) {
 		this.send(`{
@@ -72,7 +68,7 @@ class connection extends ws {
 		})
 	}
 
-	post(text, parent, ...callback){
+	post(text, parent, ...callback) {
 		this.send(`{
 		"type": "send",
 		"data": {"content": "${text}", "parent": ${parent}}

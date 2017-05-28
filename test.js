@@ -36,6 +36,17 @@ test('can download', async t => {
 	t.is(await testPromise)
 })
 
+test('can download all', async t => {
+	const testPromise = new Promise((resolve, reject) => {
+		const testConnection = new connection('test')
+		testConnection.once('ready', _ => {
+			testConnection.downloadAll(console.log, _ => resolve())
+		})
+	})
+
+	t.is(await testPromise)
+})
+
 test('can post', async t => {
 	const testPromise = new Promise((resolve, reject) => {
 		const testConnection = new connection('test')
