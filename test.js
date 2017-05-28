@@ -57,13 +57,3 @@ test('can post', async t => {
 
 	t.is(await testPromise)
 })
-// test('downloadAll', async t => {
-// 	const testPromise = new Promise((resolve, reject) => {
-// 		const testConnection = new connection('test', 0, false, callback)
-// 		function callback () {
-// 			testConnection.downloadAll( _ => _ , resolve)
-// 		}
-// 	})
-
-// 	t.is(await testPromise)
-// })
