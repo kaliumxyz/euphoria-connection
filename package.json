@@ -7,7 +7,6 @@
   "author": "kalium",
   "license": "MIT",
   "dependencies": {
-    "k-log": "^0.5.0",
     "ws": "^3.0.0"
   },
   "devDependencies": {
