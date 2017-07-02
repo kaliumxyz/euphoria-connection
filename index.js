@@ -13,10 +13,10 @@ class connection extends ws {
 			this.on('message', this.handleMsg)
 			// Setting default behaviour keep-open behaviour.
 			this.on('ping-event', data => {
-				this.send(`{
-				"type": "ping",
-				"data": {"time": ${data.data.time}}
-				}`)
+				this.send(JSON.stringify({
+				type: "ping",
+				data: {time: data.data.time}
+				}))
 			})
 		})
 
@@ -28,15 +28,13 @@ class connection extends ws {
 	}
 
 	download(number = 100, before = null, ...callback) {
-		if(before) {
-			before = `, "before": "${before}"` 
-		} else {
-			before = ''
-		}
-		this.send(`{
-			"type": "log",
-			"data": {"n": ${number} ${before}}
-			}`)
+		this.send(JSON.stringify({
+			type: "log",
+			data: {
+				n: number,
+				before: before ? before : void(0)
+			}
+		}))
 		this.once('log-reply', data => {
 			callback.forEach(f => f(data))
 		})
@@ -59,20 +57,20 @@ class connection extends ws {
 	}
 
 	nick(nick = '<><', ...callback) {
-		this.send(`{
-		"type": "nick",
-		"data": {"name": "${nick}"}
-		}`)
+		this.send(JSON.stringify({
+		type: "nick",
+		data: {name: nick}
+		}))
 		this.once('nick-reply', data => {
 			callback.forEach(f => f(data))
 		})
 	}
 
 	post(text, parent, ...callback) {
-		this.send(`{
-		"type": "send",
-		"data": {"content": "${text}", "parent": ${parent}}
-		}`)
+		this.send(JSON.stringify({
+		type: "send",
+		data: {content: text, parent: parent}
+		}))
 		this.once('send-reply', data => {
 			callback.forEach(f => f(data))
 		})
