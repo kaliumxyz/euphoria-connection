@@ -7,7 +7,6 @@ class connection extends ws {
 
 		// Setting the basics for the connection
 		this.on('open', data => {
-			callback.forEach(f => f(data))
 			this.emit('ready')
 
 			this.on('message', this.handleMsg)
@@ -20,12 +19,27 @@ class connection extends ws {
 			})
 		})
 
+		// The snapshot event will happen right after opening and delivers relevant information, as such we can use it for the callback.
+		this.on('snapshot-event', data => {
+			callback.forEach(f => f(data))
+		})
+
 	}
 
 	handleMsg(data, flags) {
 		const dt = JSON.parse(data)
 		this.emit(dt.type, dt)
 	}
+
+	who(...callback) {
+		this.send(JSON.stringify({
+			type: "who",
+		}))
+		this.once('who-reply', data => {
+			callback.forEach(f => f(data))
+		})
+	}
+
 
 	download(number = 100, before = null, ...callback) {
 		this.send(JSON.stringify({
@@ -46,10 +60,8 @@ class connection extends ws {
 		this.on('log-reply', recurse)
 		function recurse(data){
 			if(data.data.log[0]){
-				console.log("recurse")
 				this.download(1000, data.data.log[0].id, downloadCallback)
 			} else {
-				console.log('done')
 				_ => this.removeListener('log-reply', recurse)
 				callback.forEach(f => f(data))
 			}
