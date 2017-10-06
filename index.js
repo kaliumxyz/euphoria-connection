@@ -42,17 +42,20 @@ class connection extends ws {
 
 
 	download(number = 100, before = null, ...callback) {
-		this.send(JSON.stringify({
-			type: "log",
-			data: {
-				n: number,
-				before: before ? before : void(0)
-			}
-		}))
-		this.once('log-reply', data => {
-			callback.forEach(f => f(data))
-		})
-	}
+			this.once('log-reply', data => {
+				callback.forEach(f => f(data))
+				number -= number % 1000  
+				if(data.before && number)
+					download(number-1000, data.before, ...callback)
+			})
+			this.send(JSON.stringify({
+				type: "log",
+				data: {
+					n: number % 1000 ? number % 1000 : number,
+					before: before ? before : void(0)
+				}
+			}))
+		}
 
 
 	downloadAll(downloadCallback, ...callback) {
