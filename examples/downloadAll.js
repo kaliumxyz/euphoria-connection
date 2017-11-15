@@ -1,4 +1,4 @@
-const connection = require('./')
+const connection = require('../')
 const testPromise = new Promise((resolve, reject) => {
 	const testConnection = new connection('xkcd')
 	testConnection.once('ready', _ => {
