@@ -2,7 +2,7 @@
 const ws = require('ws')
 
 class connection extends ws {
-	constructor(room = 'test', human = 0, uri = "wss://euphoria.io", options = { origin: 'https://euphoria.io' }, ...callback) {
+	constructor(room = 'test', human = 0, uri = 'wss://euphoria.io', options = { origin: 'https://euphoria.io' }, ...callback) {
 		super(`${uri}/room/${room}/ws?h=${human}`, options)
 
 		// Setting the basics for the connection
@@ -13,7 +13,7 @@ class connection extends ws {
 			// Setting default behaviour keep-open behaviour.
 			this.on('ping-event', data => {
 				this.send(JSON.stringify({
-				type: "ping",
+				type: 'ping-reply',
 				data: {time: data.data.time}
 				}))
 			})
@@ -33,7 +33,7 @@ class connection extends ws {
 
 	who(...callback) {
 		this.send(JSON.stringify({
-			type: "who",
+			type: 'who',
 		}))
 		this.once('who-reply', data => {
 			callback.forEach(f => f(data))
@@ -49,7 +49,7 @@ class connection extends ws {
 					download(number-1000, data.before, ...callback)
 			})
 			this.send(JSON.stringify({
-				type: "log",
+				type: 'log',
 				data: {
 					n: number % 1000 ? number % 1000 : number,
 					before: before ? before : void(0)
@@ -73,7 +73,7 @@ class connection extends ws {
 
 	nick(nick = '<><', ...callback) {
 		this.send(JSON.stringify({
-		type: "nick",
+		type: 'nick',
 		data: {name: nick}
 		}))
 		this.once('nick-reply', data => {
@@ -83,7 +83,7 @@ class connection extends ws {
 
 	post(text, parent, ...callback) {
 		this.send(JSON.stringify({
-		type: "send",
+		type: 'send',
 		data: {content: text, parent: parent}
 		}))
 		this.once('send-reply', data => {
