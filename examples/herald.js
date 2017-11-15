@@ -12,6 +12,6 @@ connection.once('ready', _ => {
 	// on any join event greet the person joining
 	connection.nick('><>')
 	connection.on('join-event', ev => {
-		connection.post(`greetings ${ev.data.name || "new user"}`)
+		connection.post(`greetings @${ev.data.name || "new user"}`)
 	})
 })
