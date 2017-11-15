@@ -3,7 +3,8 @@
 const Connection = require('../')
 
 /* config */
-const room = "test"
+// checks if an argument for the room is given else it will monitor test
+const room = (process.argv.join().match(/-r,(\w+)/) || [,'test'])[1]
 
 // instantiate the connection with the room
 const connection = new Connection(room)
