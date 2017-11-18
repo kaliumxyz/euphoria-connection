@@ -19,6 +19,18 @@ test('can connect', async t => {
 	t.is(await testPromise)
 })
 
+test('can reconnect', async t => {
+	const testPromise = new Promise((resolve, reject) => {
+		const testConnection = new connection(config.room)
+		testConnection.once('ready', _ => {
+			testConnection = new connection(config.room)
+			testConnection.once('ready', _ => resolve())
+		})
+	})
+
+	t.is(await testPromise)
+})
+
 test('can set nick', async t => {
 	const testPromise = new Promise((resolve, reject) => {
 		const testConnection = new connection(config.room)
