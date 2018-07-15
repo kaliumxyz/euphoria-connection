@@ -21,7 +21,7 @@ test('can connect', async t => {
 
 test('can reconnect', async t => {
 	const testPromise = new Promise((resolve, reject) => {
-		const testConnection = new connection(config.room)
+		let testConnection = new connection(config.room)
 		testConnection.once('ready', _ => {
 			testConnection = new connection(config.room)
 			testConnection.once('ready', _ => resolve())

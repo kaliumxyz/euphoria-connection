@@ -72,3 +72,5 @@ function hue_hash(text, offset = 0) {
 	// for consistency with prior behavior).
 	return (val + offset) % 255;
 }
+
+module.exports = {hue_hash, get_possible_names, replicate_color};
