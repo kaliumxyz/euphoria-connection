@@ -118,3 +118,56 @@ test('can lurk for 2 minutes while changing nick every second', async t => {
 
 	t.is(await testPromise)
 })
+
+test('can get a userID', async t => {
+	const testPromise = new Promise((resolve, reject) => {
+		const testConnection = new connection(config.room)
+		testConnection.once('ready', _ => {
+			resolve(testConnection.identity)
+		})
+	})
+
+	t.is(typeof await testPromise, 'string')
+})
+
+test('can initiate a PM', async t => {
+	const testPromise = new Promise((resolve, reject) => {
+		const testConnection = new connection(config.room)
+		testConnection.once('ready', _ => {
+			testConnection.once('pm-initiate-event', _ => resolve())
+			testConnection.pm(testConnection.identity)
+		})
+	})
+
+	t.is(await testPromise)
+})
+
+test.skip('can register an account', async t => {
+	const credentials = require('./creds.json')
+	const testPromise = new Promise((resolve, reject) => {
+		const testConnection = new connection(config.room)
+		testConnection.once('ready', _ => {
+			testConnection.registerAccount(testConnection.session_id, testConnection.identity, 'narwall')
+			testConnection.once('register-account-reply', _ => {
+				resolve()
+			})
+		})
+	})
+
+	t.is(await testPromise)
+})
+
+test.skip('can login to an account', async t => {
+	const credentials = require('./creds.json')
+	const testPromise = new Promise((resolve, reject) => {
+		const testConnection = new connection(config.room)
+		testConnection.once('ready', _ => {
+			testConnection.login(testConnection.session_id, testConnection.identity, 'narwall')
+			testConnection.once('register-account-reply', _ => {
+				resolve()
+			})
+		})
+	})
+
+	t.is(await testPromise)
+})
