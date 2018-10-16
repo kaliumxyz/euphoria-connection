@@ -1,0 +1,8 @@
+.npmignore
+examples/
+test.js
+readme.md
+README.md
+creds.json
+.travis.yml
+.eslintrc.js
