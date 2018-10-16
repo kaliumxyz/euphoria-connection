@@ -7,8 +7,6 @@
   "author": "kalium",
   "license": "MIT",
   "dependencies": {
-    "ascii-table": "0.0.9",
-    "command-line-args": "^5.0.2",
     "ws": "^3.3.1"
   },
   "devDependencies": {
