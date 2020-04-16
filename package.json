@@ -1,13 +1,13 @@
 {
   "name": "euphoria-connection",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "A simple connection lib for euphoria.",
   "main": "index.js",
   "repository": "https://github.com/kaliumxyz/euphoria-connection",
   "author": "kalium",
   "license": "MIT",
   "dependencies": {
-    "ws": "^3.3.1"
+    "ws": "^7.2.3"
   },
   "devDependencies": {
     "ava": "^0.25.0"
@@ -19,6 +19,6 @@
     "magic"
   ],
   "scripts": {
-    "test": "ava"
+    "test": "ava --verbose"
   }
 }
