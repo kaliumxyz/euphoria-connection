@@ -2,7 +2,7 @@
 const ws = require('ws');
 
 class connection extends ws {
-    constructor(room = 'test', human = 0, uri = 'wss://euphoria.io', options = { origin: 'https://euphoria.io' }, ...callback) {
+    constructor(room = 'test', human = 0, uri = 'wss://euphoria.io', options = { origin: 'https://euphoria.io'}, ...callback) {
         options.origin = options.origin ? options.origin : 'https://euphoria.io';
         super(`${uri}/room/${room}/ws?h=${human}`, options);
 
@@ -131,24 +131,24 @@ class connection extends ws {
     }
 
     login(namespace, id, password, ...callback) {
-		    this.send(JSON.stringify({
-			      type: 'login',
-			      data: {namespace: namespace, id: id, password: password}
-		    }));
-		    this.once('login-reply', data => {
-			      callback.forEach(f => f(data));
-		    });
-	  }
+        this.send(JSON.stringify({
+            type: 'login',
+            data: {namespace: namespace, id: id, password: password}
+        }));
+        this.once('login-reply', data => {
+            callback.forEach(f => f(data));
+        });
+    }
 
-	  registerAccount(namespace, id, password, ...callback) {
-		    this.send(JSON.stringify({
-			      type: 'register-account',
-			      data: {namespace: namespace, id: id, password: password}
-		    }));
-		    this.once('register-account-reply', data => {
-			      callback.forEach(f => f(data));
-		    });
-	  }
+    registerAccount(namespace, id, password, ...callback) {
+        this.send(JSON.stringify({
+            type: 'register-account',
+            data: {namespace: namespace, id: id, password: password}
+        }));
+        this.once('register-account-reply', data => {
+            callback.forEach(f => f(data));
+        });
+    }
 }
 
 module.exports = connection;
