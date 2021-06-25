@@ -1,6 +1,6 @@
 {
   "name": "euphoria-connection",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "A simple connection lib for euphoria.",
   "main": "index.js",
   "repository": "https://github.com/kaliumxyz/euphoria-connection",
