@@ -149,6 +149,16 @@ class connection extends ws {
             callback.forEach(f => f(data));
         });
     }
+    ping(time, ...callback) {
+        this.connection.send(JSON.stringify({
+            type: 'ping',
+            data: {time: time}
+        }));
+        this.once('ping-reply', data => {
+            callback.forEach(f => f(data));
+        });
+    }
+
 }
 
 module.exports = connection;
